@@ -1,0 +1,53 @@
+#
+# Copyright (C) 2006, Board of Trustees of the University of Illinois.
+#
+# The program is copyrighted by the University of Illinois, and should
+# not be distributed without prior approval.  Commercialization of this
+# product requires prior licensing from the University of Illinois.
+# Commercialization includes the integration of this code in part or
+# whole into a product for resale.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Author: C. W. Hsu, B. W. Wah, R. Y. Huang, Y. X. Chen
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+Parsing domain file
+ domain 'MARS_EXPLORATION' defined
+Parsing problem file
+ problem 'MARS_EXPLORATION_PROBLEM' defined
+
+
+
+checking for cyclic := effects --- OK.
+
+
+
+
+; Time 0.00
+; ParsingTime 0.00
+; NrActions 18
+; MakeSpan
+; MetricValue
+; PlanningTechnique Modified-FF(enforced hill-climbing search) as the subplanner
+
+(move r p0515 p3030)
+
+0.001: (MOVE ROVER1 P0000 P1005) [1]
+1.002: (DRILL ROVER1 P1005 SAMPLE1) [1]
+2.003: (MOVE ROVER1 P1005 P1314) [1]
+3.004: (TAKE_PICTURE ROVER1 P1314) [1]
+4.005: (MOVE ROVER1 P1314 P0510) [1]
+5.006: (TAKE_PICTURE ROVER1 P0510) [1]
+6.007: (MOVE ROVER1 P0510 P1020) [1]
+7.008: (DRILL ROVER1 P1020 SAMPLE3) [1]
+8.009: (TAKE_PICTURE ROVER1 P1020) [1]
+9.010: (MOVE ROVER1 P1020 P2505) [1]
+10.011: (DRILL ROVER1 P2505 SAMPLE2) [1]
+11.012: (TAKE_PICTURE ROVER1 P2505) [1]
+12.013: (COMMUNICATE ROVER1 P2505) [1]
+13.014: (MOVE ROVER1 P2505 P3020) [1]
+14.015: (DRILL ROVER1 P3020 SAMPLE4) [1]
+15.016: (COMMUNICATE ROVER1 P3020) [1]
+16.017: (MOVE ROVER1 P3020 P3030) [1]
+17.018: (TAKE_PICTURE ROVER1 P3030) [1]

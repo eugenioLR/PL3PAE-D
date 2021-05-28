@@ -170,7 +170,7 @@ class PDDL_Executor(Sequential_PID_Controller):
             self.log.write("\t>> CO2 level: "+str(r)+"\n")
             print("\t>> CO2 level: "+str(r)+"\n")
             self.__deplete_battery('reading')
-        
+
 
     def take_picture(self):
         """
@@ -231,7 +231,7 @@ class PDDL_Executor(Sequential_PID_Controller):
             task = self.tasks.pop(0)
             if type(task) is tuple:
                 self.log.write(task[0].lower()+"\n")
-                return self.actions[task[0]](self, task[1])
+                return self.actions[task[0].lower()](self, task[1])
             elif task.lower() in self.actions:
                 self.log.write(task.lower()+"\n")
                 self.actions[task.lower()](self)
@@ -283,7 +283,7 @@ class PDDL_Executor(Sequential_PID_Controller):
         self.robot.position(x, y)
         self.log.write("\t>> Moved to "+str((x, y))+"\n")
         print("\t>> Moved to "+str((x, y))+"\n")
-        
+
 
     def __can_move(self, spot):
         return u.los_raycasting((self.robot.x, self.robot.y), spot, u.npdata)
@@ -317,4 +317,3 @@ class PDDL_Executor(Sequential_PID_Controller):
         x = self._robot_x * u.npdata.shape[0]/40
         y = self._robot_y * u.npdata.shape[1]/40
         self.robot.set_position(x, y)
-        

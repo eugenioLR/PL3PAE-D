@@ -1,11 +1,11 @@
 {
-	"stage": "../res/test_4.png",
+	"stage": "../res/sandbox_spiral.png",
 	"robot": "../conf/robot.json",
 	"controller": "../conf/controller-pathplanning.json",
 	"gui": true,
 	"algorithm": "Theta*",
 	"heuristic": "euclidean",
-	"start": [2, 2],
-	"goal": [30, 30],
+	"start": [4, 4],
+	"goal": [19, 19],
 	"grid_size": 40
 }
