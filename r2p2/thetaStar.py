@@ -32,6 +32,7 @@ __version__ = "0.0.1"
 """
 
 import path_planning as pp
+import utils as u
 
 def children(point,grid):
     """
@@ -124,32 +125,16 @@ def thetaStar(start, goal, grid, heur='naive'):
             #If it is already in the closed set, skip it
             if node in closedset:
                 continue
-            """
-            if node in openset:
-                #Check if we beat the G score
-                new_g = current.G + current.move_cost(node)
-                if node.G > new_g:
-                    #If so, update the node to have a new parent
-                    node.G = new_g
-                    node.parent = current
-            else:
-                #If it isn't in the open set, calculate the G and H score for the node
-                node.G = current.G + current.move_cost(node)
-                node.H = pp.heuristic[heur](node, goal)
-                #Set the parent to our current item
-                node.parent = current
-                #Add it to the set
-                openset.add(node)
-            """
             #Otherwise if it is already in the open set
             if node in openset:
-                if lineOfSight(node.parent, node, grid):
-                    new_g = node.parent.G + node.parent.move_cost(node)
-                    if node.G > new_g:
+                if lineOfSight(current.parent, node, grid):
+                    new_g = current.parent.G + current.parent.move_cost(node)
+                    if new_g < node.G:
                         node.G = new_g
+                        node.parent = current.parent
                 else:
                     new_g = current.G + current.move_cost(node)
-                    if node.G > new_g:
+                    if new_g < node.G:
                         node.G = new_g
                         node.parent = current
             else:
@@ -160,18 +145,15 @@ def thetaStar(start, goal, grid, heur='naive'):
                 node.parent = current
                 #Add it to the set
                 openset.add(node)
-
     #Throw an exception if there is no path
     raise ValueError('No Path Found')
 
 pp.register_search_method('Theta*', thetaStar)
 
-
-
-def lineOfSight(current, new_node, grid):
+def lineOfSight(current, node, grid):
     x0, y0 = current.grid_point[0], current.grid_point[1]
-    x1, y1 = new_node.grid_point[0], new_node.grid_point[1]
-    dx, dy = y1 - y0, x1 - x0
+    x1, y1 = node.grid_point[0], node.grid_point[1]
+    dx, dy = x1 - x0, y1 - y0
     f = 0
     if dy < 0:
         dy = -dy
@@ -189,31 +171,31 @@ def lineOfSight(current, new_node, grid):
         while x0 != x1:
             f = f + dy
             if f >= dx:
-                if grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2]:
+                if grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2].value == 9:
                     return False
                 y0 = y0 + sy
                 f = f - dx
 
-            if f != 0 and grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2]:
+            if f != 0 and grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2].value == 9:
                 return False
 
-            if dy == 0 and grid[x0 + (sx - 1)//2][y0] and grid[x0 + (sx - 1)//2][y0 - 1]:
+            if dy == 0 and grid[x0 + (sx - 1)//2][y0].value == 9 and grid[x0 + (sx - 1)//2][y0 - 1].value == 9:
                 return False
 
             x0 = x0 + sx
     else:
         while y0 != y1:
             f = f + dx
-            if f >= dx:
-                if grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2]:
+            if f >= dy:
+                if grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2].value == 9:
                     return False
                 x0 = x0 + sx
                 f = f - dy
 
-            if f != 0 and grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2]:
+            if f != 0 and grid[x0 + (sx - 1)//2][y0 + (sy - 1)//2].value == 9:
                 return False
 
-            if dx == 0 and grid[x0][y0 + (sy - 1)//2] and grid[x0 - 1][y0 + (sy - 1)//2]:
+            if dx == 0 and grid[x0][y0 + (sy - 1)//2].value == 9 and grid[x0 - 1][y0 + (sy - 1)//2].value == 9:
                 return False
 
             y0 = y0 + sy
@@ -261,18 +243,22 @@ def thetaStar_mesh(start, goal, grid, heur='naive'):
         #Add it to the closed set
         closedset.add(current)
         #Loop through the node's children/siblings
-        for node in current.neighbors.values():
+        for node in children(current,grid):
             #If it is already in the closed set, skip it
             if node in closedset:
                 continue
             #Otherwise if it is already in the open set
             if node in openset:
-                #Check if we beat the G score
-                new_g = current.G + current.move_cost(node)
-                if node.G > new_g:
-                    #If so, update the node to have a new parent
-                    node.G = new_g
-                    node.parent = current
+                if lineOfSight(current.parent, node, grid):
+                    new_g = current.parent.G + current.parent.move_cost(node)
+                    if new_g < node.G:
+                        node.G = new_g
+                        node.parent = current.parent
+                else:
+                    new_g = current.G + current.move_cost(node)
+                    if new_g < node.G:
+                        node.G = new_g
+                        node.parent = current
             else:
                 #If it isn't in the open set, calculate the G and H score for the node
                 node.G = current.G + current.move_cost(node)
@@ -281,6 +267,7 @@ def thetaStar_mesh(start, goal, grid, heur='naive'):
                 node.parent = current
                 #Add it to the set
                 openset.add(node)
+
     #Throw an exception if there is no path
     raise ValueError('No Path Found')
 
