@@ -143,7 +143,7 @@ def aStar(start, goal, grid, heur='naive'):
     #Throw an exception if there is no path
     raise ValueError('No Path Found')
 
-pp.register_search_method('Theta*', Theta)
+pp.register_search_method('Theta*', thetaStar)
 
 def aStar_mesh(start, goal, grid, heur='naive'):
     """
