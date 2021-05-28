@@ -49,6 +49,7 @@ def children(point,grid):
                      [(x-1, y),(x,y - 1),(x,y + 1),(x+1,y),\
                       (x-1, y-1), (x-1, y+1), (x+1, y-1),\
                       (x+1, y+1)]]
+
         elif y > 0:
             links = [grid[d[0]][d[1]] for d in\
                      [(x-1, y),(x,y - 1),(x+1,y),\
@@ -126,7 +127,7 @@ def aStar(start, goal, grid, heur='naive'):
                 continue
             #Otherwise if it is already in the open set
             if node in openset:
-                #Check if we beat the G score 
+                #Check if we beat the G score
                 new_g = current.G + current.move_cost(node)
                 if node.G > new_g:
                     #If so, update the node to have a new parent
@@ -190,7 +191,7 @@ def aStar_mesh(start, goal, grid, heur='naive'):
                 continue
             #Otherwise if it is already in the open set
             if node in openset:
-                #Check if we beat the G score 
+                #Check if we beat the G score
                 new_g = current.G + current.move_cost(node)
                 if node.G > new_g:
                     #If so, update the node to have a new parent

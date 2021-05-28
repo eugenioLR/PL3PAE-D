@@ -199,7 +199,7 @@ def generate_neighbors(node, nodes):
             if u.los_raycasting(node.point, n.point, u.npdata) is None: # There is line of sight
                 found[angle] = n # There was nothing stored, so we just save the current node in that direction
     node.neighbors = found # Replace the list of neighbors so they can be explored later
-        
+
 
 def generate_navmesh(npdata, waypoints):
     """
@@ -323,3 +323,4 @@ def run_path_planning_mesh(mesh_points, algo='A* mesh', start=(1, 1), finish=(2,
 import heuristics
 import aStar
 import dijkstra
+import thetaStar
